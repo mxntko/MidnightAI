@@ -1,6 +1,9 @@
 "use client";
 
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+export const revalidate = 0;
+
 
 import { useEffect, useRef, useState } from "react";
 
@@ -236,11 +239,10 @@ export default function DashboardPage() {
                             <div
                                 key={i}
                                 onClick={() => onClickFeed(item)}
-                                className={`text-sm font-mono p-2 rounded-lg border cursor-pointer transition ${
-                                    item.threat
+                                className={`text-sm font-mono p-2 rounded-lg border cursor-pointer transition ${item.threat
                                         ? "bg-red-900/40 border-red-700 hover:bg-red-800/40"
                                         : "bg-black/30 border-white/10"
-                                }`}
+                                    }`}
                             >
                                 {item.text}
                             </div>
