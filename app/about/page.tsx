@@ -173,7 +173,7 @@ export default function AboutPage() {
             <Button
               variant="outline"
               className="w-full"
-              onClick={() => window.open("YOUR_GITHUB_LINK_MIKKO", "_blank")}
+              onClick={() => window.open("https://github.com/mxntko", "_blank")}
             >
               <Github className="w-5 h-5 mr-2" /> GitHub Profile
             </Button>
@@ -195,7 +195,7 @@ export default function AboutPage() {
             <Button
               variant="outline"
               className="w-full"
-              onClick={() => window.open("YOUR_GITHUB_LINK_DAUS", "_blank")}
+              onClick={() => window.open("https://github.com/vfirdausv-lab", "_blank")}
             >
               <Github className="w-5 h-5 mr-2" /> GitHub Profile
             </Button>
