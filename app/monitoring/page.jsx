@@ -1,23 +1,27 @@
 "use client";
 
-
-
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
 export default function MonitoringPage() {
-    const [confirmedThreats, setConfirmedThreats] = useState(() =>
-        JSON.parse(localStorage.getItem("confirmedThreats") || "[]")
-    );
-
+    const [confirmedThreats, setConfirmedThreats] = useState([]);
     const [selectedThreat, setSelectedThreat] = useState(null);
     const [popup, setPopup] = useState(null);
     const [loadingTrack, setLoadingTrack] = useState(false);
 
     useEffect(() => {
-        localStorage.setItem("confirmedThreats", JSON.stringify(confirmedThreats));
+        const data = typeof window !== "undefined"
+            ? JSON.parse(localStorage.getItem("confirmedThreats") || "[]")
+            : [];
+        setConfirmedThreats(data);
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            localStorage.setItem("confirmedThreats", JSON.stringify(confirmedThreats));
+        }
     }, [confirmedThreats]);
 
     const openThreatInfo = (t) => {
@@ -60,17 +64,17 @@ export default function MonitoringPage() {
 
             <h1 className="text-3xl font-bold mb-6">Monitoring</h1>
 
-            <Card className="bg-[#11131d]/60 backdrop-blur-xl border border-white/10">
+            <Card className="bg-[#11131d]/60 backdrop-blur-xl border border-white/10 shadow-2xl">
                 <CardContent className="p-4">
                     {confirmedThreats.length === 0 && (
-                        <p className="text-white/50">No confirmed threats yet.</p>
+                        <p className="text-white/50 text-sm">No confirmed threats yet.</p>
                     )}
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {confirmedThreats.map((t) => (
                             <Card
                                 key={t.id}
-                                className="bg-[#141722]/60 backdrop-blur-xl border border-white/10 p-4 flex flex-col gap-3"
+                                className="bg-[#141722]/70 backdrop-blur-xl border border-white/10 p-4 flex flex-col gap-3 hover:bg-[#151a27]/80 transition shadow-lg"
                             >
                                 <p className="text-lg font-semibold">{t.type}</p>
                                 <p className="text-white/60 text-sm">Source IP: {t.ip}</p>
@@ -99,7 +103,7 @@ export default function MonitoringPage() {
 
             {popup === "info" && selectedThreat && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center">
-                    <Card className="bg-[#151822]/80 backdrop-blur-xl border border-white/10 w-[420px] p-6">
+                    <Card className="bg-[#151822]/80 backdrop-blur-xl border border-white/10 w-[420px] p-6 shadow-2xl animate-fadeIn">
                         <h2 className="text-xl font-semibold mb-3">{selectedThreat.type}</h2>
                         <p className="text-white/60 text-sm mb-3">IP: {selectedThreat.ip}</p>
                         <p className="text-white/60 text-sm mb-3">
@@ -146,7 +150,10 @@ export default function MonitoringPage() {
                                 )}
                             </Button>
 
-                            <Button variant="destructive" onClick={() => setPopup(null)}>
+                            <Button
+                                variant="destructive"
+                                onClick={() => setPopup(null)}
+                            >
                                 Leave
                             </Button>
                         </div>
@@ -156,7 +163,7 @@ export default function MonitoringPage() {
 
             {popup === "tracked-result" && selectedThreat && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center">
-                    <Card className="bg-[#151822]/80 backdrop-blur-xl border border-white/10 w-[420px] p-6">
+                    <Card className="bg-[#151822]/80 backdrop-blur-xl border border-white/10 w-[420px] p-6 shadow-2xl animate-fadeIn">
                         <h2 className="text-xl font-semibold mb-4">Analysis Result</h2>
 
                         <p className="text-white/70 text-sm">Affected Account: user_042</p>
@@ -177,7 +184,7 @@ export default function MonitoringPage() {
 
             {popup === "fixed" && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center">
-                    <Card className="bg-[#151822]/80 backdrop-blur-xl border border-green-500 w-[360px] p-6 text-center">
+                    <Card className="bg-[#151822]/80 backdrop-blur-xl border border-green-500 w-[360px] p-6 text-center shadow-2xl animate-fadeIn">
                         <h2 className="text-xl font-semibold text-green-400">
                             Threat has been fixed.
                         </h2>
