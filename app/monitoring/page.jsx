@@ -11,17 +11,30 @@ export default function MonitoringPage() {
     const [popup, setPopup] = useState(null);
     const [loadingTrack, setLoadingTrack] = useState(false);
 
+    const safeRead = (key, fallback) => {
+        if (typeof window === "undefined") return fallback;
+        try {
+            const value = localStorage.getItem(key);
+            if (!value) return fallback;
+            return JSON.parse(value);
+        } catch {
+            return fallback;
+        }
+    };
+
+    const safeWrite = (key, value) => {
+        if (typeof window === "undefined") return;
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+        } catch { }
+    };
+
     useEffect(() => {
-        const data = typeof window !== "undefined"
-            ? JSON.parse(localStorage.getItem("confirmedThreats") || "[]")
-            : [];
-        setConfirmedThreats(data);
+        setConfirmedThreats(safeRead("confirmedThreats", []));
     }, []);
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            localStorage.setItem("confirmedThreats", JSON.stringify(confirmedThreats));
-        }
+        safeWrite("confirmedThreats", confirmedThreats);
     }, [confirmedThreats]);
 
     const openThreatInfo = (t) => {
@@ -51,8 +64,7 @@ export default function MonitoringPage() {
     };
 
     const removeThreat = (id) => {
-        const f = confirmedThreats.filter((c) => c.id !== id);
-        setConfirmedThreats(f);
+        setConfirmedThreats(confirmedThreats.filter((c) => c.id !== id));
     };
 
     return (

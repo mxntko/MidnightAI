@@ -2,35 +2,45 @@
 
 import { useEffect, useRef, useState } from "react";
 
+function safeLocalJSON(key, fallback) {
+    try {
+        const item = localStorage.getItem(key);
+        if (!item) return fallback;
+        return JSON.parse(item);
+    } catch {
+        return fallback;
+    }
+}
+
 export default function DashboardPage() {
     const chartRef = useRef(null);
     const [isReady, setIsReady] = useState(false);
 
     const [stats, setStats] = useState({
-        totalTraffic: null,
-        detectedThreats: null,
-        activeConnections: null,
-        modelAccuracy: null,
+        totalTraffic: 0,
+        detectedThreats: 0,
+        activeConnections: 0,
+        modelAccuracy: 0,
     });
 
-    const [feed, setFeed] = useState(null);
-    const [graphData, setGraphData] = useState(null);
+    const [feed, setFeed] = useState([]);
+    const [graphData, setGraphData] = useState([]);
     const [pendingThreat, setPendingThreat] = useState(null);
     const [showConfirmPopup, setShowConfirmPopup] = useState(false);
     const [health, setHealth] = useState({ cpu: 27, ram: 62, disk: 45 });
 
     useEffect(() => {
-        const data = {
-            totalTraffic: JSON.parse(localStorage.getItem("totalTraffic") || "0"),
-            detectedThreats: JSON.parse(localStorage.getItem("detectedThreats") || "0"),
-            activeConnections: JSON.parse(localStorage.getItem("activeConnections") || "0"),
-            modelAccuracy: JSON.parse(localStorage.getItem("modelAccuracy") || "00.0"),
-            feed: JSON.parse(localStorage.getItem("feed") || "null"),
-            graphData: JSON.parse(localStorage.getItem("graphData") || "[3,6,4,10,7,12,9,14]"),
+        const loaded = {
+            totalTraffic: safeLocalJSON("totalTraffic", 0),
+            detectedThreats: safeLocalJSON("detectedThreats", 0),
+            activeConnections: safeLocalJSON("activeConnections", 0),
+            modelAccuracy: safeLocalJSON("modelAccuracy", 0),
+            feed: safeLocalJSON("feed", null),
+            graphData: safeLocalJSON("graphData", [3, 6, 4, 10, 7, 12, 9, 14]),
         };
 
-        if (!data.feed) {
-            data.feed = [
+        if (!loaded.feed) {
+            loaded.feed = [
                 { text: "[AI] Model Initialized…", threat: false },
                 { text: "[Traffic] 2200 packets scanned", threat: false },
                 { text: "[Threat] No anomalies detected", threat: false },
@@ -39,14 +49,14 @@ export default function DashboardPage() {
         }
 
         setStats({
-            totalTraffic: data.totalTraffic,
-            detectedThreats: data.detectedThreats,
-            activeConnections: data.activeConnections,
-            modelAccuracy: data.modelAccuracy,
+            totalTraffic: loaded.totalTraffic,
+            detectedThreats: loaded.detectedThreats,
+            activeConnections: loaded.activeConnections,
+            modelAccuracy: loaded.modelAccuracy,
         });
 
-        setFeed(data.feed);
-        setGraphData(data.graphData);
+        setFeed(loaded.feed);
+        setGraphData(loaded.graphData);
         setIsReady(true);
     }, []);
 
@@ -193,7 +203,7 @@ export default function DashboardPage() {
     };
 
     const confirmThreat = () => {
-        const db = JSON.parse(localStorage.getItem("confirmedThreats") || "[]");
+        const db = safeLocalJSON("confirmedThreats", []);
         db.push(pendingThreat);
         localStorage.setItem("confirmedThreats", JSON.stringify(db));
         setShowConfirmPopup(false);
