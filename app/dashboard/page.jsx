@@ -34,7 +34,7 @@ export default function DashboardPage() {
             totalTraffic: safeLocalJSON("totalTraffic", 0),
             detectedThreats: safeLocalJSON("detectedThreats", 0),
             activeConnections: safeLocalJSON("activeConnections", 0),
-            modelAccuracy: safeLocalJSON("modelAccuracy", 0),
+            modelAccuracy: safeLocalJSON("modelAccuracy", 98),
             feed: safeLocalJSON("feed", null),
             graphData: safeLocalJSON("graphData", [3, 6, 4, 10, 7, 12, 9, 14]),
         };
@@ -244,11 +244,10 @@ export default function DashboardPage() {
                             <div
                                 key={i}
                                 onClick={() => onClickFeed(item)}
-                                className={`text-sm font-mono p-2 rounded-lg border cursor-pointer transition ${
-                                    item.threat
+                                className={`text-sm font-mono p-2 rounded-lg border cursor-pointer transition ${item.threat
                                         ? "bg-red-900/40 border-red-700 hover:bg-red-800/40"
                                         : "bg-black/30 border-white/10"
-                                }`}
+                                    }`}
                             >
                                 {item.text}
                             </div>
