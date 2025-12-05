@@ -17,7 +17,7 @@ export function Sidebar() {
             {/* HEADER */}
             <div className="flex items-center justify-between p-4">
                 <span className="text-xl font-bold">
-                    {open ? "AI NIDS" : "⚡"}
+                    {open ? "Midnight AI" : "⚡"}
                 </span>
 
                 <button

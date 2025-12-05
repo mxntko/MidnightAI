@@ -92,8 +92,8 @@ export default function AboutPage() {
   return (
     <div
       className={`min-h-screen w-full transition-colors duration-500 ${theme === "dark"
-          ? "bg-gradient-to-br from-slate-900 via-black to-slate-950 text-white"
-          : "bg-gradient-to-br from-white via-gray-200 to-gray-300 text-black"
+        ? "bg-gradient-to-br from-slate-900 via-black to-slate-950 text-white"
+        : "bg-gradient-to-br from-white via-gray-200 to-gray-300 text-black"
         }`}
     >
       {/* Animated Network Graph Background */}
@@ -126,7 +126,7 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text"
         >
-          About the NIDS AI System
+          About the Midnight NIDS AI System
         </motion.h1>
 
         <motion.p
