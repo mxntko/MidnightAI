@@ -1,6 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+MidnightAI adalah sebuah aplikasi berbasis website yang bertemakan AI-Powered Network Intrusion Detection System (NIDS) yang menggunakan Java sebagai bahasa pemrograman. Aplikasi ini dapat:
 
-## Getting Started
+(Semua yang diciptakan dalam website di bawah bersifat rekayasa dan tidak real)
+a. Memantau traffic jaringan secara real-time
+b. Mendeteksi anomali dan serangan siber menggunakan machine learning
+c. Menggunakan neural networks untuk klasifikasi pattern serangan
+d. Memberikan alert otomatis dengan tingkat akurasi tinggi
+
+Teknologi yang digunakan dalam proyek ini diantaranya:
+
+ChatGPT (Prompting)
+Next.js
+React
+GitHub
+VSCode
+TypeScript (Programming Language)
+TailWind CSS
+Shadcn UI
+Recharts
+Vite
+
+
+Bagian file yang dibantu dengan A.I.:
+about/page.tsx
+dashboard/page.jsx
+monitoring/page.jsx
+test/page.jsx
+globals.css
+layout.js
+layout.jsx
+app/page.tsx
+(setiap file di app/components)
+next.config.js
+package.json
+postcss.config.js
+tailwind.config.js
+
+
+Cara menjalankan Aplikasi:
 
 First, run the development server:
 
